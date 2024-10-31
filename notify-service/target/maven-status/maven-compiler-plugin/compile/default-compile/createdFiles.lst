@@ -1,0 +1,11 @@
+com\mycompany\notify\application\NotifyServices.class
+com\mycompany\notify\infrastructure\MensajeriaRabbitMQ.class
+com\mycompany\notify\Main.class
+com\mycompany\notify\domain\AppUser.class
+com\mycompany\notify\infrastructure\EventListener.class
+com\mycompany\notify\domain\ConferenciaCreadaEvent.class
+com\mycompany\notify\domain\Notify.class
+com\mycompany\notify\infrastructure\ConfigRabbitMQ.class
+com\mycompany\notify\controller\NotificacionController.class
+com\mycompany\notify\domain\INotifyServices.class
+com\mycompany\notify\shared\MapperNotificaciones.class
