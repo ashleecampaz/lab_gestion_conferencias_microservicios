@@ -49,13 +49,14 @@ public class ConferenceController {
      }
      /* Get a Event by ID */
      @GetMapping("/{id}")
-     public Conferencia getUserById(@PathVariable Long id) {
+     public Conferencia getConferenceById(@PathVariable Long id) {
         return conferenceService.findById(id);
     }
     
     @GetMapping("/{id}/Organizator")
      public Usuario getOrganizator(@PathVariable Long id) {
-        return conferenceService.getOrganizator(id);
+         Conferencia con = conferenceService.findById(id);
+        return conferenceService.getOrganizator(con.getOrganizator_id());
     } 
     
     @PostMapping(value="/Organizator", consumes = "application/json", produces = "application/json")
