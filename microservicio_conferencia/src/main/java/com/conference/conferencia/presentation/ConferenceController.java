@@ -40,7 +40,7 @@ public class ConferenceController {
      @RequestMapping(method = RequestMethod.POST, produces =
     "application/json", consumes = "application/json")
      @ResponseBody
-        public ResponseEntity<Conferencia> create(@RequestBody Conferencia con, @RequestBody Usuario us) {
+        public ResponseEntity<Conferencia> create(@RequestBody Conferencia con) {
         Conferencia conf = conferenceService.createConference(con);
         if( conf!=null){
             return ResponseEntity.ok( conf);
@@ -58,8 +58,8 @@ public class ConferenceController {
         return conferenceService.getOrganizator(id);
     } 
     
-    @PostMapping(value="/{id}/Organizator", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Usuario> createUser(@PathVariable Long id, @RequestBody Usuario us){
+    @PostMapping(value="/Organizator", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Usuario> createUser(@RequestBody Usuario us){
         Usuario user = conferenceService.createOrganizator(us); 
         if(user!=null){
             return ResponseEntity.ok(us);

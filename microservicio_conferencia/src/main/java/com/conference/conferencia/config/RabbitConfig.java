@@ -34,4 +34,9 @@ public class RabbitConfig {
         }
         return channel;
     }
+
+    public static String getQUEUE_NAME() {
+        return QUEUE_NAME;
+    }
+    
 }

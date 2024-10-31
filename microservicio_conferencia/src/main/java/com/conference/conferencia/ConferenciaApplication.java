@@ -8,6 +8,7 @@ public class ConferenciaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ConferenciaApplication.class, args);
+                
 	}
 
 }

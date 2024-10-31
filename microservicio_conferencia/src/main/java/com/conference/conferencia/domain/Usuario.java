@@ -4,13 +4,10 @@
  */
 package com.conference.conferencia.domain;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *
@@ -58,6 +55,12 @@ public class Usuario implements Serializable{
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return String.format("{\"id\": \"%d\",\"email\": \"%s\", \"name\": \"%s\", \"lastName\": \"%s\"}",id,email,name,lastName);
+    }
+
+    
     
     
 }
