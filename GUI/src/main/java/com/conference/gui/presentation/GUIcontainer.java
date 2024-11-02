@@ -3,7 +3,8 @@ package com.conference.gui.presentation;
 
 import com.conference.gui.article.Article;
 import com.conference.gui.clients.UserClient;
-import com.conference.gui.conference.UserConference;
+import com.conference.gui.conference.ConferenceClient;
+import com.conference.gui.conference.IConferenceRestClient;
 import com.conference.gui.entities.Articulo;
 import com.conference.gui.entities.Conference;
 import com.conference.gui.entities.Usuario;
@@ -37,8 +38,8 @@ import javax.swing.JScrollPane;
 public class GUIcontainer extends javax.swing.JFrame {
 
     private Usuario usuario;
-     UserConference objConference = new UserConference();
-     Article objArticle=new  Article();
+    IConferenceRestClient conferenceClient ;
+    Article objArticle=new  Article();
     //private UserService userService;
     //private ConferenceService conferenceService;
     //private ArticleService articuloService;
@@ -50,23 +51,20 @@ public class GUIcontainer extends javax.swing.JFrame {
     
     
     
-    public GUIcontainer(Usuario us) {
+    public GUIcontainer(Usuario us, IConferenceRestClient conferenceClient ) {
+        this.conferenceClient = conferenceClient;
         this.usuario = us;
         initComponents();
         listConferences("");//muestra todas las listas
         listArticles();
     }
     
-    public GUIcontainer(){
-        initComponents();
-         listConferences("");
-         listArticles();
-    }
+    
        
     @SuppressWarnings("unchecked")
     // Método que se ejecuta cuando el usuario hace clic en "Listado de conferencias"
  public void listConferences(String searchText) {
-pnlListadoCon.removeAll();  // Limpiamos el contenido actual del panel de conferencias
+    pnlListadoCon.removeAll();  // Limpiamos el contenido actual del panel de conferencias
 
     // Configuramos el layout del panel para mantener el título arriba
     pnlListadoCon.setLayout(new BorderLayout());
@@ -75,15 +73,9 @@ pnlListadoCon.removeAll();  // Limpiamos el contenido actual del panel de confer
     pnlListadoCon.add(lbListadoCon, BorderLayout.NORTH);
 
     // Obtenemos todas las conferencias desde el servicio
-    List<Conference> conferences = objConference.getConferencias();
+    List<Conference> conferences = conferenceClient.getConferencias();
 
-    // Filtramos la lista de conferencias si se proporciona un texto de búsqueda
-    if (searchText != null && !searchText.isEmpty()) {
-        conferences = conferences.stream()
-            .filter(conference -> conference.getNombre().toLowerCase().contains(searchText.toLowerCase()))
-            .collect(Collectors.toList());
-    }
-
+   
     // Creamos un panel para listar las conferencias con un BoxLayout para apilar verticalmente
     JPanel panelConferencias = new JPanel();
     panelConferencias.setLayout(new BoxLayout(panelConferencias, BoxLayout.Y_AXIS));  // Apilamos verticalmente los mini paneles
@@ -99,7 +91,7 @@ pnlListadoCon.removeAll();  // Limpiamos el contenido actual del panel de confer
             conferencePanel.setMaximumSize(new Dimension(277, 30));  // Evita que los paneles se estiren más allá de este tamaño
 
             // Etiquetas con la información de la conferencia
-            JLabel nameLabel = new JLabel("Conferencia: " + conference.getNombre());  // Etiqueta con el nombre de la conferencia
+            JLabel nameLabel = new JLabel("Conferencia: " + conference.getName());  // Etiqueta con el nombre de la conferencia
 
             // Botón con el símbolo "+"
             JButton detallesButton = new JButton("+");
@@ -442,7 +434,7 @@ pnlListadoCon.removeAll();  // Limpiamos el contenido actual del panel de confer
     private void lbCrearConMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbCrearConMouseClicked
        
        
-        GUIcreateConference crearConferencia = new GUIcreateConference(objConference);
+        GUIcreateConference crearConferencia = new GUIcreateConference(conferenceClient,usuario);
         try {
             crearConferencia.setMaximum(true);
         } catch (PropertyVetoException ex) {
@@ -479,9 +471,9 @@ pnlListadoCon.removeAll();  // Limpiamos el contenido actual del panel de confer
     }//GEN-LAST:event_lbCerrarSesionMouseClicked
 
     private void lbCrearCon1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbCrearCon1MouseClicked
-        UserConference conference = new UserConference();
+        ConferenceClient conference = new ConferenceClient();
        
-        GUIcreateConference crearConferencia = new GUIcreateConference(objConference);
+        GUIcreateConference crearConferencia = new GUIcreateConference(conferenceClient,usuario);
         try {
             crearConferencia.setMaximum(true);
         } catch (PropertyVetoException ex) {

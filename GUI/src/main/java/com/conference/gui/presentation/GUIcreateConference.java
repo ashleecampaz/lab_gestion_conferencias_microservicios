@@ -2,14 +2,15 @@
 package com.conference.gui.presentation;
 
 
-import com.conference.gui.conference.IUserRestConference;
 import com.conference.gui.entities.Conference;
+import com.conference.gui.entities.Usuario;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import javax.swing.JOptionPane;
+import com.conference.gui.conference.IConferenceRestClient;
 /**
  * Interfaz de registro de conferencia.
  * 
@@ -40,16 +41,17 @@ public class GUIcreateConference extends javax.swing.JInternalFrame {
     /**
      * Creates new form GUIcreateConference
      */
-       private IUserRestConference conferenceService;
+       private IConferenceRestClient conferenceService;
       
-
+       private Usuario usuario; 
     
-    public GUIcreateConference(IUserRestConference con) {
+    
+    
+    public GUIcreateConference(IConferenceRestClient con, Usuario us) {
         this.conferenceService = con;
-       
+        this.usuario = us; 
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -566,13 +568,13 @@ public class GUIcreateConference extends javax.swing.JInternalFrame {
             }
 
             // Si todas las validaciones pasan, crear el objeto Conference con los datos que POR AHORA necesitamos
-            Conference conferencia = new Conference(nombre, numMaxArt);
-            Conference result = conferenceService.setConferencia(conferencia);
+            Conference conferencia = new Conference(nombre,entidadOrganizadora,usuario.getId());
+            Conference result = conferenceService.setConferencia(conferencia, usuario);
 
             // Guardar la conferencia o realizar la acción que corresponda
             if (result != null) {
                 showMessage("Conferencia registrada exitosamente.");
-                GUIcontainer container = new GUIcontainer();
+                GUIcontainer container = new GUIcontainer(usuario,conferenceService);
                 container.listConferences("");
             }
 

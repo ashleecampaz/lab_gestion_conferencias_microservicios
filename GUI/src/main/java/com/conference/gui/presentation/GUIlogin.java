@@ -5,6 +5,7 @@ package com.conference.gui.presentation;
 
 import com.conference.gui.clients.IUserRestClient;
 import com.conference.gui.clients.UserClient;
+import com.conference.gui.conference.ConferenceClient;
 import com.conference.gui.entities.Login;
 import com.conference.gui.entities.Usuario;
 import java.awt.Dimension;
@@ -281,9 +282,9 @@ public class GUIlogin extends javax.swing.JFrame {
         }
        if (us != null) {
             this.dispose();
-            GUIcontainer container = new GUIcontainer(); 
+            ConferenceClient conferenceclient = new ConferenceClient();
+            GUIcontainer container = new GUIcontainer(us,conferenceclient); 
             // Pasar Usuario, ConferenceService y ArticleService al constructor de GUIcontainer
-            container.setUsuario(us);
             container.setVisible(true);
             cleanFields();
         } else {

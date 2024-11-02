@@ -5,6 +5,7 @@
 package com.conference.gui.conference;
 
 import com.conference.gui.entities.Conference;
+import com.conference.gui.entities.Usuario;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -17,9 +18,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
  *
  * @author Personal
  */
-public class UserConference implements IUserRestConference {
-      private static final String USER_AGENT = "GUIConference";
-    private final String urlSaveConference = "http://localhost:7777/api";
+public class ConferenceClient implements IConferenceRestClient {
+    private static final String USER_AGENT = "GUIConference";
+    private final String urlSaveConference = "http://localhost:8060/Conference";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -28,7 +29,7 @@ public class UserConference implements IUserRestConference {
         try {
             // Crear la solicitud HTTP GET
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(urlSaveConference.concat("/conferencias"))) 
+                    .uri(URI.create(urlSaveConference)) 
                     .header("Content-Type", "application/json")
                     .header("User-Agent", USER_AGENT)
                     .GET()
@@ -53,15 +54,20 @@ public class UserConference implements IUserRestConference {
 
 
     @Override
-    public Conference setConferencia(Conference prmConferencia) {
+    public Conference setConferencia(Conference prmConferencia, Usuario us) {
           Conference savedConference = null;
         try {
+            Usuario user = createUser( us);
+            
+            if(user==null){
+                return null; 
+            }
             // Convertir el objeto `Articulo` a JSON
             String jsonInputString = objectMapper.writeValueAsString(prmConferencia);
 
             // Crear la solicitud HTTP
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(urlSaveConference.concat("/registrarConferencia"))) // Asume que tu endpoint es "/save"
+                    .uri(URI.create(urlSaveConference)) // Asume que tu endpoint es "/save"
                     .header("Content-Type", "application/json")
                     .header("User-Agent", USER_AGENT)
                     .POST(HttpRequest.BodyPublishers.ofString(jsonInputString))
@@ -82,6 +88,38 @@ public class UserConference implements IUserRestConference {
         }
         return savedConference;
     
+    }
+
+    @Override
+    public Usuario createUser(Usuario us) {
+        Usuario user = null;
+       try{
+           //Solicitud para hacer un duplicado del usuario
+            String jsonUser = us.simpleToString(); 
+            // Crear la solicitud HTTP
+            HttpRequest requestUsuario = HttpRequest.newBuilder()
+                    .uri(URI.create(urlSaveConference.concat("/Organizator"))) // Asume que tu endpoint es "/save"
+                    .header("Content-Type", "application/json")
+                    .header("User-Agent", USER_AGENT)
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonUser))
+                    .build();
+            
+            //Enviamos a solicitud
+            HttpClient clientUsuario = HttpClient.newHttpClient();
+            HttpResponse<String> responseUsuario = clientUsuario.send(requestUsuario, HttpResponse.BodyHandlers.ofString());
+            
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            // Convertir el JSON a un objeto Java
+            if(responseUsuario.statusCode()==200){
+                user = objectMapper.readValue(responseUsuario.body(), Usuario.class);
+            }
+            
+       }catch(Exception e){
+           System.out.println(e.getMessage());
+       }
+       
+       return user;
     }
     
 }

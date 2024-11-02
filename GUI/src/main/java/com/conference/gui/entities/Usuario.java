@@ -95,6 +95,9 @@ public class Usuario {
     
     }
     
+    public String simpleToString(){
+        return String.format("{\"name\": \"%s\",\"lastName\": \"%s\",\"email\": \"%s\",\"id\": \"%d\"}",name,lastName,email,id);
+    }
     public String toStringResearchFields(){
         
         String researchFields = "[";

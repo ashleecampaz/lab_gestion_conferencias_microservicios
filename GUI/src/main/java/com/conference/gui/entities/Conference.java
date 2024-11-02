@@ -4,35 +4,62 @@
  */
 package com.conference.gui.entities;
 
-import jakarta.persistence.Id;
-import java.util.ArrayList;
-import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+
+
+
 
 /**
  *
  * @author Ashlee Campaz
  */
-@Getter
-@Setter
-@AllArgsConstructor
+
+
 public class Conference {
-     private static final long serialVersionUID = 1L;
-    @Id
-     private int id;
-    private String nombre;
-    private int cantidadMaxArticulos;
-    private List<Articulo> articuloList= new ArrayList<>();
+    private String name; 
+    private String organization;
+    
+    private Long organizator_id; 
 
-    public Conference() {
-    }
-
-    public Conference( String nombre, int cantidadMaxArticulos) {
-        this.nombre = nombre;
-        this.cantidadMaxArticulos = cantidadMaxArticulos;
+    private Long id;
+    
+    public Conference(String name, String organization, Long organizator_id){
+        this.organizator_id = organizator_id;
+        this.organization = organization;
+        this.name = name; 
     }
     
+    public Conference(){}
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public Long getOrganizator_id() {
+        return organizator_id;
+    }
+
+    public void setOrganizator_id(Long organizator_id) {
+        this.organizator_id = organizator_id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     
 }

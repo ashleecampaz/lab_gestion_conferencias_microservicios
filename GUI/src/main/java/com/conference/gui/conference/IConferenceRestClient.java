@@ -4,15 +4,16 @@
  */
 package com.conference.gui.conference;
 import com.conference.gui.entities.Conference;
+import com.conference.gui.entities.Usuario;
 import java.util.List;
 
 /**
  *
  * @author Personal
  */
-public interface IUserRestConference {
+public interface IConferenceRestClient {
     
    public List<Conference> getConferencias();
-    public Conference setConferencia(Conference prmConferencia);
-    
+   public Conference setConferencia(Conference prmConferencia, Usuario us);
+   public Usuario createUser(Usuario us); 
 }
