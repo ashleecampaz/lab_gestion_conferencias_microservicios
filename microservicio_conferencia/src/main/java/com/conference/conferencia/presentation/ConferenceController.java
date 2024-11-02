@@ -33,8 +33,13 @@ public class ConferenceController {
     @RequestMapping(method = RequestMethod.GET, produces =
     "application/json")
      @ResponseBody
-     public List<Conferencia> findAll() {
-        return conferenceService.findAll();
+     public ResponseEntity<List<Conferencia>> findAll() {
+         List<Conferencia> conferencias = conferenceService.findAll();
+         if(conferencias.isEmpty()){
+             ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+         }
+        return ResponseEntity.ok( conferencias);
+        
     }
      
      @RequestMapping(method = RequestMethod.POST, produces =

@@ -31,6 +31,7 @@ public class ConferenceService implements IConferenceService {
     @Override
     public List<Conferencia> findAll() {
        List<Conferencia> conferencias = (List<Conferencia>) accesoConferencia.findAll();
+
        return conferencias; 
     }
 
@@ -65,7 +66,11 @@ public class ConferenceService implements IConferenceService {
 
     @Override
     public Usuario createOrganizator(Usuario us) {
+       Usuario user = accesoUsuario.findById(us.getId()).orElse(null);
+       if(user==null){
         return accesoUsuario.save(us); 
+       }
+       return user; 
     }
     
 }
