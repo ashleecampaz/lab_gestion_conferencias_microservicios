@@ -14,8 +14,7 @@ public class Email {
     private String asunto;
     private ArrayList<String> destinatarios;
     private String remitente; 
-    private String cuerpo; 
-    
+    private String cuerpo;  
     private String method;
 
     public String getMethod() {
