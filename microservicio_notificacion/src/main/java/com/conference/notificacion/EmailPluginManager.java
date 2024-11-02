@@ -47,7 +47,7 @@ public class EmailPluginManager implements CommandLineRunner{
     }
     
     public IEmailPlugin getEmailPlugin(String emailMethodCode) {
-
+        
         //Verificar si existe una entrada en el archivo para el país indicado.
         String propertyName = "email." + emailMethodCode.toLowerCase();
         if (!pluginProperties.containsKey(propertyName)) {
