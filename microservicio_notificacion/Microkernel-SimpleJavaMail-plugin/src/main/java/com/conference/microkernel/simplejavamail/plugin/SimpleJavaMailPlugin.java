@@ -36,7 +36,7 @@ public class SimpleJavaMailPlugin implements IEmailPlugin {
         .buildEmail();
         
         Mailer mailer = MailerBuilder
-        .withSMTPServer("smtp.gmail.com", 587, "easy.conference.prueba@gmail.com", "ijdojxwhltdbyerd")
+        .withSMTPServer("smtp.gmail.com", 587, "easy.conference.prueba@gmail.com", "iinjvivwcikfnkxf")
         .buildMailer();
         if(mailer.validate(email)){
              mailer.sendMail(email);
